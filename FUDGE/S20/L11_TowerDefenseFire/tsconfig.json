@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "outFile": "TowerDefense.js",
+    "types": [
+      "../FudgeCore/FudgeCore",
+      "../FudgeAid/FudgeAid",
+      "../FudgeUserInterface/FudgeUserInterface"
+    ]
+  }
+}
