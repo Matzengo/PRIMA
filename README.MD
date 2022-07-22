@@ -6,7 +6,7 @@
   - Curriculum and semester: AIN6
   - Course this development was created in: PRIMA
   - Docent: Prof. Jirka Dell'Oro-Friedl
-  * Link to the finished and executable application on Github-Pages: https://matzengo.github.io/PRIMA/RED/index.html
+  * Link to the finished and executable application on Github-Pages: https://matzengo.github.io/PRIMA/RED/index.html (Funktioniert leider nicht über github wegen NodeSprite.isActive Probleme) Bitte herunterladen und über VS CODE starten.
   * Link to the source code: https://github.com/Matzengo/PRIMA/tree/main/RED
   * Link to the design document: https://github.com/Matzengo/PRIMA/tree/main/RED/Documentation/RED.pdf
   * Description for users on how to interact: Charakter kann mit [w,a,s,d] oder Pfeiltasten gesteuert werden. Um zu angreifen, wird die Leertaste verwendet. Angriffe besitzen cooldown und können nicht sofort wiederholt werden.
