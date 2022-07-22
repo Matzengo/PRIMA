@@ -1,0 +1,41 @@
+https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Humanlike_white
+
+Avatar:
+Head
+->Eyes>purple
+->Hair
+-->short
+--->Pixie>white
+Arms
+->Arms>1
+Torso
+->Shirts
+-->Sleeved>white
+Legs
+->Legs
+-->Amour>7
+->Shoes
+-->Shoes>Brown
+Weapons
+->Weapon
+-->Slash oversize>halberd
+
+----------------------------------------------------
+https://is.si/animator/
+
+Avatar Walk and Standing (64x64 & 9 Frames) :
+Top-Stand: Start Frame 1 at (0, 512) left top edge of the sheet; Frame Count: 1
+Top-Walk: Start Frame 2 at (0, 512) left top edge of the sheet; Frame Count: 8
+Left-Stand: Start Frame 1 at (0, 576) left top edge of the sheet; Frame Count: 1
+Left-Walk: Start Frame 2 at (0, 576) left top edge of the sheet; Frame Count: 8
+Down-Stand: Start Frame 1 at (0, 640) left top edge of the sheet; Frame Count: 1
+Down-Walk: Start Frame 2 at (0, 640) left top edge of the sheet; Frame Count: 8
+Right-Stand: Start Frame 1 at (0, 704) left top edge of the sheet; Frame Count: 1
+Right-Walk: Start Frame 2 at (0, 704) left top edge of the sheet; Frame Count: 8
+
+
+Avatar Slash Attack (192x192):
+Top: Start Frame 1 at (0, 1344) left top edge of the sheet; Frame Count: 6
+Left: Start Frame 1 at (0, 1536) left top edge of the sheet; Frame Count: 6
+Down: Start Frame 1 at (0, 1728) left top edge of the sheet; Frame Count: 6
+Right: Start Frame 1 at (0, 1920) left top edge of the sheet; Frame Count: 6

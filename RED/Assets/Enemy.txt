@@ -1,0 +1,38 @@
+https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Humanlike_white
+
+Enemy:
+Body:
+->Body
+-->Skeleton>beige
+Head
+->Hats and Helmets
+-->Hat Accessories
+--->Horns>horns_1
+Arms
+->Shoulder
+-->Legion>steel
+Weapons
+->Weapon
+-->Thrust>spear metal
+
+----------------------------------------------------
+https://is.si/animator/
+
+Enemy Walk and Standing (64x64 & 9 Frames) :
+Top-Stand: Start Frame 1 at (0, 512) left top edge of the sheet; Frame Count: 1
+Top-Walk: Start Frame 2 at (0, 512) left top edge of the sheet; Frame Count: 8
+Left-Stand: Start Frame 1 at (0, 576) left top edge of the sheet; Frame Count: 1
+Left-Walk: Start Frame 2 at (0, 576) left top edge of the sheet; Frame Count: 8
+Down-Stand: Start Frame 1 at (0, 640) left top edge of the sheet; Frame Count: 1
+Down-Walk: Start Frame 2 at (0, 640) left top edge of the sheet; Frame Count: 8
+Right-Stand: Start Frame 1 at (0, 704) left top edge of the sheet; Frame Count: 1
+Right-Walk: Start Frame 2 at (0, 704) left top edge of the sheet; Frame Count: 8
+
+Enemy Thrust Attack (64x64):
+Top: Start Frame 1 at (0, 256) left top edge of the sheet; Frame Count: 8
+Left: Start Frame 1 at (0, 320) left top edge of the sheet; Frame Count: 8
+Down: Start Frame 1 at (0, 384) left top edge of the sheet; Frame Count: 8
+Right: Start Frame 1 at (0, 448) left top edge of the sheet; Frame Count: 8
+
+Enemy Spawning (64x64):
+Top: Start Frame 1 at (0, 1280) left top edge of the sheet; Frame Count: 5 REVERSE FRAME! 5, 4, 3, 2, 1
