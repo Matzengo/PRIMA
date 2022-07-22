@@ -169,9 +169,7 @@
                     }
                   }
                 }
-              ],
-              "ComponentLight": [],
-              "ComponentRigidbody": []
+              ]
             },
             "children": []
           }
@@ -873,7 +871,7 @@
                     "idResource": "Audio|2022-07-20T17:37:44.485Z|23846",
                     "playing": false,
                     "loop": false,
-                    "volume": 0.49999991059303284
+                    "volume": 0.25
                   }
                 },
                 {
@@ -882,7 +880,7 @@
                     "idResource": "Audio|2022-07-20T17:37:32.879Z|08468",
                     "playing": false,
                     "loop": false,
-                    "volume": 1
+                    "volume": 0.5
                   }
                 },
                 {
@@ -891,7 +889,7 @@
                     "idResource": "Audio|2022-07-20T17:37:37.110Z|58560",
                     "playing": false,
                     "loop": false,
-                    "volume": 1
+                    "volume": 0
                   }
                 },
                 {
@@ -900,7 +898,7 @@
                     "idResource": "Audio|2022-07-20T18:16:45.770Z|32756",
                     "playing": false,
                     "loop": false,
-                    "volume": 1
+                    "volume": 0.5
                   }
                 }
               ]

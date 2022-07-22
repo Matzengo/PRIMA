@@ -1,10 +1,11 @@
 @font-face {
-  font-family: "Retro Gaming"; 
+  font-family: "Retro Gaming";
   src: url(Assets/Retro\ Gaming.ttf)
 }
 
-html, body {
-  font-family: "Retro Gaming"; 
+html,
+body {
+  font-family: "Retro Gaming";
   padding: 0px;
   margin: 0px;
   width: 100%;
@@ -13,27 +14,33 @@ html, body {
   overflow: hidden;
 }
 
-dialog { 
-  text-align: center; 
+dialog {
+  text-align: center;
 }
 
-canvas.fullscreen { 
-  width: 100vw; 
-  height: 100vh; 
+canvas.fullscreen {
+  width: 100vw;
+  height: 100vh;
 }
 
 #vui {
   position: absolute;
   color: white;
   z-index: 1000;
-  padding: 15px;
-  top: 20px;
+  width: 100%;
+  height: 100%;
+  top: 5%;
+  left: 3%;
+  border: white;
 }
 
 ul.no-bullets {
-  list-style-type: none; /* Remove bullets */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margins */
+  list-style-type: none;
+  /* Remove bullets */
+  padding: 0;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margins */
 }
 
 input {
@@ -42,4 +49,20 @@ input {
   color: #fd1010;
   border: none;
   font-size: 20px;
+}
+
+#endScreen {
+  padding-top: 5%;
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 5%;
+}
+
+#endScreen p {
+  font-size: 10ex;
+  color: RED;
+  height: 100%;
+  width: 100%;
+  text-align: center;
 }

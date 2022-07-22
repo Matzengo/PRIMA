@@ -15,12 +15,12 @@ namespace Script {
         MAX_SPEED: number;
         acceleration: number = 0.01;
         attackSpeed: number;
-
+        // For repositioning
         leftRight: boolean;
 
         constructor(name: string, foe: Player, health: number, damage: number, attackSpeed: number, speed: number) {
             let attackRange = 1.3;
-            super(name, health, attackRange, "enemy", 3);
+            super(name, health, attackRange, "enemy", 3, 1);
             // initialize state machine
             this.foe = foe;
             // own stats
@@ -28,7 +28,7 @@ namespace Script {
             this.attackSpeed = attackSpeed;
             this.MAX_SPEED = speed;
             this.speed = 0;
-
+            // Adding Component to Node
             this.addComponent(new ƒ.ComponentTransform());
             let mesh: ƒ.MeshCube = new ƒ.MeshCube();
             this.addComponent(new ƒ.ComponentMesh(mesh));
@@ -36,17 +36,17 @@ namespace Script {
             let _material: ƒ.ComponentMaterial = new ƒ.ComponentMaterial(material);
             _material.clrPrimary = new ƒ.Color(0, 0, 0, 0);
             this.addComponent(_material);
-
+            // sprites
             this.loadSpawn(0, 3);
             this.loadSprite();
-
+            // Adding StateMachine to Enemy
             this.stateMachine = new StateMachine();
             this.addComponent(this.stateMachine);
             this.stateMachine.stateCurrent = ACTION.REPOSITION;
-
             this.leftRight = true;
-
-            this.mtxLocal.translate(new ƒ.Vector3(ƒ.Random.default.getRange(-MAP_X_LIMIT + 1, MAP_X_LIMIT - 1), ƒ.Random.default.getRange(-MAP_Y_LIMIT + 1, MAP_Y_LIMIT - 1)))
+            // Use Component Script to generate Spawn Position
+            let startPositionScript: ƒ.Component  = new RandomStartPositionScript();
+            this.addComponent(startPositionScript);
         }
 
         public update() {
@@ -55,9 +55,8 @@ namespace Script {
             this.timeout--;
         }
 
-        /**
-         * Let the enemy move towards a target
-         */
+
+        // Let the enemy move towards a target
         public moveTowards(sideward: boolean = false) {
             let target = this.foe.getPosition();
             // console.log("moving towards player at position: " + target.x + " " + target.y);
@@ -119,7 +118,6 @@ namespace Script {
                 }
             }
             this.changeSprite();
-
         }
 
         private async loadSprite() {
@@ -138,10 +136,11 @@ namespace Script {
             this.attackTopSpriteNode = await createSpriteNode("Assets/Enemy.png", [0, 256, 64, 64], 7, 64, "attackTopSpriteNode", 15)
             this.attackDownSpriteNode = await createSpriteNode("Assets/Enemy.png", [0, 384, 64, 64], 7, 64, "attackDownSpriteNode", 15)
 
+            this.standMoveSpriteList = [this.standRightSpriteNode, this.standLeftSpriteNode, this.standTopSpriteNode, this.standDownSpriteNode,
+            this.moveRightSpriteNode, this.moveLeftSpriteNode, this.moveTopSpriteNode, this.moveDownSpriteNode];
+            this.attackSpriteList = [this.attackRightSpriteNode, this.attackLeftSpriteNode, this.attackTopSpriteNode, this.attackDownSpriteNode];
+
             this.addSprites();
-            // Can be used for coloring the buffed/debuffed enemy
-            //let color = new ƒ.Color(255,0,0);
-            //this.attackRightAnimation.spritesheet.color = color;
         }
     }
 }

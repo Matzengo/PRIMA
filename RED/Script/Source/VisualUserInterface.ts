@@ -2,6 +2,7 @@ namespace Script {
     import ƒ = FudgeCore;
     import ƒUi = FudgeUserInterface;
 
+    // Virtual User Interface for HP, Level and Sccore
     export class VisualUserInterface extends ƒ.Mutable {
         public health: number; 
         public level: number;
@@ -15,7 +16,5 @@ namespace Script {
 
         protected reduceMutator(_mutator: ƒ.Mutator): void { 
         }
-      }
-
-
+    }
 }

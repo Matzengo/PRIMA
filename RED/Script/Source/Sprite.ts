@@ -2,7 +2,7 @@ namespace Script {
     import ƒ = FudgeCore;
     import ƒAid = FudgeAid;
 
-    
+    // Function to create Node Sprites from Informations
     export async function createSpriteNode( _location: RequestInfo, _position: number[], _frames: number, _offset: number, _name: string, _framrate: number): Promise<ƒAid.NodeSprite> {
         // Create Animation
         let imgSpriteSheet: ƒ.TextureImage = new ƒ.TextureImage();

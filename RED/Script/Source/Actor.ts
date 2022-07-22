@@ -36,24 +36,25 @@ namespace Script {
         attackTopSpriteNode: ƒAid.NodeSprite;
         attackDownSpriteNode: ƒAid.NodeSprite;
 
-        constructor(name: string, health: number, attackRange: number, spriteName: string, gettingHitSoundNumber: number, hittingSoundNumber: number = 0, movingSoundNumber: number = 1) {
-            super(name);
+        standMoveSpriteList: ƒAid.NodeSprite[];
+        attackSpriteList: ƒAid.NodeSprite[];
 
+        constructor(name: string, health: number, attackRange: number, spriteName: string, gettingHitSoundNumber: number, hittingSoundNumber: number, movingSoundNumber: number = 0) {
+            super(name);
+            // Stats
             this.health = health;
             this.attackRange = attackRange;
             this.timeout = 0;
-
+            // Directions
             this.direction = ƒ.Vector2.ZERO();
             this.lookingDirection = ƒ.Vector2.ZERO();
             this.previousDirection = ƒ.Vector2.ZERO();
-
+            // Sprite
             this.spriteName = spriteName;
-
-            this.soundMoving = graph.getChildrenByName("Sounds")[0].getComponents(ƒ.ComponentAudio)[hittingSoundNumber];
-            this.soundAttacking = graph.getChildrenByName("Sounds")[0].getComponents(ƒ.ComponentAudio)[movingSoundNumber];
-
+            // Audio
+            this.soundMoving = graph.getChildrenByName("Sounds")[0].getComponents(ƒ.ComponentAudio)[movingSoundNumber];
+            this.soundAttacking = graph.getChildrenByName("Sounds")[0].getComponents(ƒ.ComponentAudio)[hittingSoundNumber];
             this.soundGettingHit = graph.getChildrenByName("Sounds")[0].getComponents(ƒ.ComponentAudio)[gettingHitSoundNumber];
-
         }
 
         public getHealth(): number {
@@ -68,7 +69,7 @@ namespace Script {
             if (this.timeout < 1) {
                 this.attackAnimation();
                 this.timeout = 60;
-                // console.log(this.lookingDirection.x + "  " + this.lookingDirection.y);
+
                 let lowerLimit = new ƒ.Vector2(this.mtxLocal.translation.x, this.mtxLocal.translation.y);
                 let currentDirection = this.lookingDirection;
 
@@ -76,9 +77,8 @@ namespace Script {
                 // x'= x cos(α) - y sin(α) | α in radians
                 // y'= x sin(α) + y cos(α) | α in radians
 
-                //      __________
-                //      |    ^    |  <-- direction vector
-                //      |____|____|  <-- cube = attack range
+                //        /^\  <-- direction vector
+                //       /_|_\  <-- polygon = attack range
 
                 // calculate top point of drawing
                 let topLimit = new ƒ.Vector2(currentDirection.x, currentDirection.y);
@@ -95,18 +95,12 @@ namespace Script {
                 rightLimit.scale(this.attackRange);
                 rightLimit.add(lowerLimit);
 
-                // console.log("Lower limit: ", lowerLimit, "\nLeft limit: ", leftLimit, "\nTop limit ", topLimit, "\nRight limit", rightLimit);
                 return new Polygon([lowerLimit, leftLimit, topLimit, rightLimit]);
             } else {
                 return new Polygon();
             }
         }
 
-        /**
-         * Removes amount of damage from total health
-         * @param damage damage dealt to this enemy
-         * @returns true if enemy survived, else false
-         */
         public receiveDamage(damage: number): number {
             this.health -= damage;
             //console.log("Ouch! " + this.name + " received " + damage + " damage. Am now at " + this.health + "health");
@@ -121,22 +115,10 @@ namespace Script {
         }
 
         protected addSprites() {
-            this.addChild(this.standRightSpriteNode);
-            this.addChild(this.standLeftSpriteNode);
-            this.addChild(this.standTopSpriteNode);
-            this.addChild(this.standDownSpriteNode);
-
-            this.addChild(this.moveRightSpriteNode);
-            this.addChild(this.moveLeftSpriteNode);
-            this.addChild(this.moveTopSpriteNode);
-            this.addChild(this.moveDownSpriteNode);
-
-            this.addChild(this.attackRightSpriteNode);
-            this.addChild(this.attackLeftSpriteNode);
-            this.addChild(this.attackTopSpriteNode);
-            this.addChild(this.attackDownSpriteNode);
-
+            this.standMoveSpriteList.forEach(sprite => this.addChild(sprite));
+            this.attackSpriteList.forEach(sprite => this.addChild(sprite));
         }
+
         protected async changeSprite() {
             if (this.direction.equals(ƒ.Vector2.ZERO()) && !this.checkAttackAnimation()) {
 
@@ -157,6 +139,7 @@ namespace Script {
                     this.standLeftSpriteNode.activate(true);
                     this.spawnSpriteNode.activate(false);
                 }
+
             } else if (!this.checkAttackAnimation()) {
                 this.deactivateAnimations();
                 if (+this.direction.y.toPrecision(1) == 1) {
@@ -176,25 +159,20 @@ namespace Script {
             this.previousDirection.set(this.direction.x, this.direction.y);
         }
 
-        protected async deactivateAnimations() {
-            this.moveRightSpriteNode.activate(false);
-            this.moveLeftSpriteNode.activate(false);
-            this.moveTopSpriteNode.activate(false);
-            this.moveDownSpriteNode.activate(false);
-            this.standRightSpriteNode.activate(false);
-            this.standLeftSpriteNode.activate(false);
-            this.standTopSpriteNode.activate(false);
-            this.standDownSpriteNode.activate(false);
+        private async deactivateAnimations() {
+            this.standMoveSpriteList.forEach(sprite => sprite.activate(false));
         }
 
-        private deactivateAttack() {
-            this.attackRightSpriteNode.activate(false);
-            this.attackLeftSpriteNode.activate(false);
-            this.attackTopSpriteNode.activate(false);
-            this.attackDownSpriteNode.activate(false);
+        private async deactivateAttack() {
+            this.attackSpriteList.forEach(sprite => sprite.activate(false));
         }
 
-        public async attackAnimation() {
+        protected async deactivateAllSprites() {
+            this.deactivateAnimations();
+            this.deactivateAttack();
+        }
+
+        private async attackAnimation() {
 
             if (this.timeout < 1) {
                 if (this.direction.equals(ƒ.Vector2.ZERO())) {
@@ -223,18 +201,21 @@ namespace Script {
             }
         }
 
-        public async stopAttackAnimation() {
-            if (this.attackTopSpriteNode.getCurrentFrame == 5 && this.checkAttackAnimation() && +this.lookingDirection.y.toPrecision(1) == 1) {
-                this.deactivateAttack()
+        protected async stopAttackAnimation() {
+            if (!this.checkAttackAnimation()) {
+                return;
+            }
+            if (this.attackTopSpriteNode.getCurrentFrame == 5 && +this.lookingDirection.y.toPrecision(1) == 1) {
+                this.deactivateAttack();
                 this.standTopSpriteNode.activate(true);
-            } else if (this.attackDownSpriteNode.getCurrentFrame == 5 && this.checkAttackAnimation() && +this.lookingDirection.y.toPrecision(1) == -1) {
-                this.deactivateAttack()
+            } else if (this.attackDownSpriteNode.getCurrentFrame == 5 && +this.lookingDirection.y.toPrecision(1) == -1) {
+                this.deactivateAttack();
                 this.standDownSpriteNode.activate(true);
-            } else if (this.attackRightSpriteNode.getCurrentFrame == 5 && this.checkAttackAnimation() && this.lookingDirection.x >= 0) {
-                this.deactivateAttack()
+            } else if (this.attackRightSpriteNode.getCurrentFrame == 5 && this.lookingDirection.x >= 0) {
+                this.deactivateAttack();
                 this.standRightSpriteNode.activate(true);
-            } else if (this.attackLeftSpriteNode.getCurrentFrame == 5 && this.checkAttackAnimation() && this.lookingDirection.x < 0) {
-                this.deactivateAttack()
+            } else if (this.attackLeftSpriteNode.getCurrentFrame == 5 && this.lookingDirection.x < 0) {
+                this.deactivateAttack();
                 this.standLeftSpriteNode.activate(true);
             }
         }
@@ -242,9 +223,9 @@ namespace Script {
         protected isStanding(): boolean {
             return this.standDownSpriteNode.isActive || this.standTopSpriteNode.isActive || this.standLeftSpriteNode.isActive || this.standRightSpriteNode.isActive;
         }
+
         protected checkAttackAnimation(): boolean {
-            return (this.attackRightSpriteNode.isActive || this.attackLeftSpriteNode.isActive || this.attackTopSpriteNode.isActive || this.attackDownSpriteNode.isActive);
+            return this.attackSpriteList.filter(sprite => sprite.isActive).length > 0;
         }
     }
-
 }
